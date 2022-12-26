@@ -1,11 +1,9 @@
-
+import threading as th
 import tkinter as tk
+from tkinter import messagebox
 import pyautogui as pag
 import random
 import time
-import os
-import subprocess
-import threading as th
 
 class Gui:
     def __init__(self):
@@ -32,13 +30,13 @@ class Gui:
         self.txb1 = tk.Entry(self.fram, font=("Arial","10"))
         self.txb1.grid(row=0, column=1)
 
-        self.text2 = tk.Label(self.fram, text="Size (px) def=size-screen", font=("Arial","10"), background="darkgray")
+        self.text2 = tk.Label(self.fram, text="Size (1920 1080) def=size-screen", font=("Arial","10"), background="darkgray")
         self.text2.grid(row=1, column=0, padx=5, pady=5)
 
         self.txb2 = tk.Entry(self.fram, font=("Arial","10"))
         self.txb2.grid(row=1, column=1)
 
-        self.text3 = tk.Label(self.fram, text="Mouse speed (s) def=2", font=("Arial","10"), background="darkgray")
+        self.text3 = tk.Label(self.fram, text="Mouse speed (s) def=0.5", font=("Arial","10"), background="darkgray")
         self.text3.grid(row=2, column=0, padx=5)
 
         self.txb3 = tk.Entry(self.fram, font=("Arial","10"))
@@ -63,33 +61,83 @@ class Gui:
             self.button["text"] = "Stop"
             self.d = 1
 
-    def pron(self):
-        while self.d == 1:
-            print("hi")
-            time.sleep(1)
-
     def move(self):
-        self.position = pag.position()
-        self.count = 0
-        self.screen_x, self.screen_y = pag.size()
-
-        while self.d == 1:
         
-            if pag.position() == self.position:
-                self.count += 1
+        if  self.button["text"] != "Stop":
 
+            self.error_count = 0
+            self.wait_time = 5
+            self.screen_x, self.screen_y = pag.size()
+            self.speed = 0.5
+
+            self.int_w = self.txb1.get()
+
+            if len(self.int_w) == 0:
+                self.wait_time = 5
             else:
-                self.count = 0
-                self.position = pag.position()
-            
-            if self.count > 5:
-                self.x = random.randint(0, self.screen_x)
-                self.y = random.randint(0, self.screen_y)
-                pag.moveTo(self.x , self.y, 0.5)
-                self.position = pag.position()
+                try:
+                    self.wait_time = int(self.int_w)
+                except ValueError:
+                    if self.error_count == 0:    
+                        messagebox.showerror(title="ValueError", message="ValueError-wait time")
+                        self.error_count = 1
+                        self.starter()
+                
+            self.int_xy = self.txb2.get()
 
-            print(self.count)
-            time.sleep(1)
+            if len(self.int_xy) == 0:
+                self.screen_x, self.screen_y = pag.size()
+            else:
+                self.split_xy = self.int_xy.split()
+                try:
+                    self.screen_x, self.screen_y = self.split_xy
+                except ValueError:
+                    if self.error_count == 0:
+                        messagebox.showerror(title="ValueError", message="ValueError-size")
+                        self.error_count = 1
+                        self.starter()
+                else:
+                    try:
+                        self.screen_x = int(self.screen_x)
+                        self.screen_y = int(self.screen_y)
+                    except ValueError:
+                        if self.error_count == 0:
+                            messagebox.showerror(title="ValueError", message="ValueError-size")
+                            self.error_count = 1    
+                            self.starter()
+                            
+            self.int_s = self.txb3.get()
+
+            if len(self.int_s) == 0:
+                self.speed = 0.5
+            else:
+                try:
+                    self.speed = float(self.int_s)
+                except ValueError:
+                    if self.error_count == 0:
+                        messagebox.showerror(title="ValueError", message="ValueError-mouse speed")
+                        self.error_count = 1    
+                        self.starter()
+
+            self.position = pag.position()
+            self.count = 0
+
+            while self.d == 1:
+        
+                if pag.position() == self.position:
+                    self.count += 1
+
+                else:
+                    self.count = 0
+                    self.position = pag.position()
+            
+                if self.count > self.wait_time:
+                    self.x = random.randint(0, self.screen_x)
+                    self.y = random.randint(0, self.screen_y)
+                    pag.moveTo(self.x , self.y, self.speed)
+                    self.position = pag.position()
+
+                time.sleep(1)
 
     def starter(self):
 
