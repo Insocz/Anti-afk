@@ -3,21 +3,22 @@
 ## Adjustable function
 
 * Wait time
-* screen size
-* mouse speed
+* Screen size
+* Mouse speed
 
 ## Libraries
 
-* [threading](https://docs.python.org/3/library/threading.html)
-* [tkinter](https://docs.python.org/3/library/tkinter.html)
-* [pyautogui](https://pypi.org/project/PyAutoGUI/)
-* [random](https://docs.python.org/3/library/random.html)
-* [time](https://docs.python.org/3/library/time.html)
+* [Threading](https://docs.python.org/3/library/threading.html)
+* [Tkinter](https://docs.python.org/3/library/tkinter.html)
+* [Pyautogui](https://pypi.org/project/PyAutoGUI/)
+    * It may need to be downloaded.
+* [Random](https://docs.python.org/3/library/random.html)
+* [Time](https://docs.python.org/3/library/time.html)
 
 ## My contacts
 
-* discord - Inso#8002
+* Discord - Inso#8002
 
 ## Warning
 
-* This app is not intended for work envarent environment.
+* This app is not intended for work environment.
