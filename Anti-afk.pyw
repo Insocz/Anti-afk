@@ -47,6 +47,7 @@ class Gui:
         self.button = tk.Button(self.root, text="Start", font=("Arial","15"), padx=10, background="#7FFF00", command=self.starter)
         self.button.pack(pady=10)
 
+        self.root.protocol("WM_DELETE_WINDOW", self.on_close)
         self.root.mainloop()
         
     def butt(self):
@@ -148,6 +149,13 @@ class Gui:
 
         self.p1.start()
         self.p2.start()  
+
+    def on_close(self):
+
+            if self.button["text"] != "Stop":
+                self.root.destroy()
+            else:
+                self.starter()
 
 
 x = Gui()
