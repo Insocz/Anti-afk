@@ -1,5 +1,7 @@
 # Anti-afk app
 
+After set wait time will move your mouse.
+
 ## Adjustable function
 
 * Wait time
