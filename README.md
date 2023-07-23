@@ -17,10 +17,6 @@ After set wait time will move your mouse.
 * [Random](https://docs.python.org/3/library/random.html)
 * [Time](https://docs.python.org/3/library/time.html)
 
-## My contacts
-
-* Discord - Inso#8002
-
 ## Warning
 
 * This app is not intended for work environment.
